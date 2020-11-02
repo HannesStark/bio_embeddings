@@ -27,7 +27,7 @@ class BertBaseEmbedder(EmbedderWithFallback):
         raise NotImplementedError
 
     def _embed_batch_impl(
-        self, batch: List[str], model: Union[BertModel, AlbertModel]
+            self, batch: List[str], model: Union[BertModel, AlbertModel]
     ) -> Generator[ndarray, None, None]:
         """ Embed batch code shared between Bert and Albert """
         seq_lens = [len(seq) for seq in batch]
@@ -52,10 +52,10 @@ class BertBaseEmbedder(EmbedderWithFallback):
 
         for seq_num, seq_len in zip_longest(range(len(embeddings)), seq_lens):
             # slice off first and last positions (special tokens)
-            embedding = embeddings[seq_num][1 : seq_len + 1]
-            assert (
-                seq_len == embedding.shape[0]
-            ), f"Sequence length mismatch: {seq_len} vs {embedding.shape[0]}"
+            embedding = embeddings[seq_num]
+            # assert (
+            #    seq_len == embedding.shape[0]
+            # ), f"Sequence length mismatch: {seq_len} vs {embedding.shape[0]}"
 
             yield embedding
 
